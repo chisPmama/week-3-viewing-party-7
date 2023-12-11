@@ -43,4 +43,22 @@ RSpec.describe "User Registration" do
     expect(current_path).to eq(register_path)
     expect(page).to have_content("Email has already been taken")
   end
+
+  it 'does not create a user if email isnt unique' do 
+    visit register_path
+
+    name = "crisP chisP"
+    password = "candycanes"
+    email = "chisP@gmail.com"
+
+    # When I fill in that form with my name, email, and matching passwords,
+    fill_in "user[name]", with: name
+    fill_in "user[email]", with: email
+    fill_in "user[password]", with: password
+    fill_in "user[password_confirmation]", with: "badbadbad"
+
+    click_on "Create New User"
+    expect(current_path).to eq(register_path)
+    expect(page).to have_content("Error! Passwords do not match.")
+  end
 end
