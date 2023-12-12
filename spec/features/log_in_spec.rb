@@ -19,7 +19,7 @@ RSpec.describe "User Log In Page" do
 
       fill_in :email, with: @email
       fill_in :password, with: @password
-      click_link "Log In"
+      click_button "Log In"
 
       expect(current_path).to eq(user_path(@user))
     end
