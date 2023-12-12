@@ -1,4 +1,4 @@
-class UsersController <ApplicationController 
+class UsersController < ApplicationController 
   def new 
     @user = User.new()
   end 
@@ -11,6 +11,7 @@ class UsersController <ApplicationController
     user = params[:user]
     user[:email] = user[:email].downcase
     new_user = User.new(user_params)
+    session[:user_id] = new_user.id
 
     if user[:password] != user[:password_confirmation]
       flash[:error] = "Error! Passwords do not match."
@@ -30,10 +31,12 @@ class UsersController <ApplicationController
   def login_user
     user = User.find_by(email: params[:email])
     if user.authenticate(params[:password])
+      session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
       redirect_to user_path(user)
     else
       flash[:error] = "Error! Incorrect credentials."
+      # render :login_form
       redirect_to login_path
     end
   end
