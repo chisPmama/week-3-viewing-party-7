@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'welcome#index'
 
   get '/login', to: 'users#login_form'
-  post '/login', to: 'users#login'
+  post '/login', to: 'users#login_user'
 
   get '/register', to: 'users#new'
   post '/users', to: 'users#create'
