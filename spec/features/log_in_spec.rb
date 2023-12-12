@@ -24,4 +24,24 @@ RSpec.describe "User Log In Page" do
       expect(current_path).to eq(user_path(@user))
     end
   end
+
+  describe 'Logging In (Sad Path)' do
+    it 'will return an error if credentials are incorrect' do
+      visit root_path
+
+      click_link "Log In"
+      expect(current_path).to eq(login_path)
+
+      expect(page).to have_field(:email)
+      expect(page).to have_field(:password)
+
+      fill_in :email, with: @email
+      fill_in :password, with: "ohno"
+      click_button "Log In"
+
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content("Error! Incorrect credentials.")
+
+    end
+  end
 end
