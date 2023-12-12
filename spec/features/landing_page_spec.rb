@@ -61,6 +61,7 @@ RSpec.describe 'Landing Page' do
       # I'm taken to the landing page
       expect(current_path).to eq(root_path)
       # And I can see that the Log Out link has changed back to a Log In link
+      save_and_open_page
       expect(page).to_not have_link("Log Out")
       expect(page).to have_link("Log In")
       expect(page).to have_button("Create an Account")
