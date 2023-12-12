@@ -21,7 +21,7 @@ RSpec.describe "User Registration" do
     fill_in "user[password]", with: password
     fill_in "user[password_confirmation]", with: password
 
-    click_on "Create New User"
+    click_on "Create an Account"
 
     # I'm taken to my dashboard page `/users/:id`
     user = User.last
@@ -38,7 +38,7 @@ RSpec.describe "User Registration" do
     
     fill_in :user_name, with: 'User Two'
     fill_in :user_email, with:'notunique@example.com'
-    click_button 'Create New User'
+    click_button 'Create an Account'
 
     expect(current_path).to eq(register_path)
     expect(page).to have_content("Email has already been taken")
@@ -57,7 +57,7 @@ RSpec.describe "User Registration" do
     fill_in "user[password]", with: password
     fill_in "user[password_confirmation]", with: "badbadbad"
 
-    click_on "Create New User"
+    click_on "Create an Account"
     expect(current_path).to eq(register_path)
     expect(page).to have_content("Error! Passwords do not match.")
   end

@@ -12,7 +12,7 @@ RSpec.describe 'Landing Page' do
   end
 
   it 'has links/buttons that link to correct pages' do 
-    click_button "Create New User"
+    click_button "Create an Account"
     
     expect(current_path).to eq(register_path) 
     
@@ -33,4 +33,38 @@ RSpec.describe 'Landing Page' do
       expect(page).to have_content(user2.email)
     end     
   end 
+
+  describe 'Logging In/Logging Out' do
+    before :each do
+      @user = User.create(name: "ChisP", password: "candycanes", password_confirmation: "candycanes", email: "chisP@gmail.com")
+      @email = "chisP@gmail.com"
+      @password = "candycanes"
+
+      # As a logged in user 
+      # When I visit the landing page
+      visit root_path
+      click_link "Log In"
+      fill_in :email, with: @email
+      fill_in :password, with: @password
+      click_button "Log In"
+    end
+    
+    it 'does stuff' do
+      visit root_path
+      # I no longer see a link to Log In or Create an Account
+      expect(page).to_not have_link("Log In")
+      expect(page).to_not have_button("Create an Account")
+      # But I see a link to Log Out.
+      expect(page).to have_link("Log Out")
+      # When I click the link to Log Out
+      click_link "Log Out"
+      # I'm taken to the landing page
+      expect(current_path).to eq(root_path)
+      # And I can see that the Log Out link has changed back to a Log In link
+      expect(page).to_not have_link("Log Out")
+      expect(page).to have_link("Log In")
+      expect(page).to have_button("Create an Account")
+      
+    end
+  end
 end
