@@ -73,14 +73,26 @@ RSpec.describe 'Landing Page' do
       @user1 = User.create(name: "Candy Canes", password: "test", password_confirmation: "test", email: "candycandy@test.com")
       @user2 = User.create(name: "Butter Butt", password: "test", password_confirmation: "test", email: "buttbutt@test.com")
       @user3 = User.create(name: "ChisP", password: "candycanes", password_confirmation: "candycanes", email: "chisP@gmail.com")
+    
+      visit root_path
     end 
 
     it 'when visiting the landing page, the section of the page that lists existing users is not there if not logged in' do
-      visit root_path
-
       expect(page).to_not have_content(@user1.email)
       expect(page).to_not have_content(@user2.email)
       expect(page).to_not have_content(@user3.email)
+    end
+
+    it 'when logged in, user can see the list of emails' do
+      click_link "Log In"
+      fill_in :email, with: @user3.email
+      fill_in :password, with: @user3.password
+      click_button "Log In"
+      visit root_path
+
+      expect(page).to have_content(@user1.email)
+      expect(page).to have_content(@user2.email)
+      expect(page).to have_content(@user3.email)
     end
   end
 end
