@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'Landing Page' do
   describe 'Original Work' do
     before :each do 
-      user1 = User.create(name: "User_One", password: "test", password_confirmation: "test", email: "user1@test.com")
-      user2 = User.create(name: "User_Two", password: "test", password_confirmation: "test", email: "user2@test.com")
+      @user1 = User.create(name: "User_One", password: "test", password_confirmation: "test", email: "user1@test.com")
+      @user2 = User.create(name: "User_Two", password: "test", password_confirmation: "test", email: "user2@test.com")
       visit '/'
     end 
   
@@ -23,17 +23,22 @@ RSpec.describe 'Landing Page' do
       expect(current_path).to eq(root_path)
     end 
   
-    # xit 'lists out existing users' do 
-    #   user1 = User.create(name: "User_One", email: "user1@test.com")
-    #   user2 = User.create(name: "User_Two", email: "user2@test.com")
+    it 'lists out existing users' do 
+      visit login_path
+
+      fill_in :email, with: @user1.email
+      fill_in :password, with: @user1.password
+      click_button "Log In"
+
+      visit root_path
+
+      expect(page).to have_content('Existing Users:')
   
-    #   expect(page).to have_content('Existing Users:')
-  
-    #   within('.existing-users') do 
-    #     expect(page).to have_content(user1.email)
-    #     expect(page).to have_content(user2.email)
-    #   end     
-    # end
+      within('.existing-users') do 
+        expect(page).to have_content(@user1.email)
+        expect(page).to have_content(@user2.email)
+      end     
+    end
   end
 
   describe 'Logging In/Logging Out' do
