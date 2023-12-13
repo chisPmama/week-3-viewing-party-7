@@ -12,11 +12,11 @@ RSpec.describe 'Movies Index Page' do
   end 
 
   it 'shows all movies' do 
-    visit "users/#{@user1.id}"
+    visit "dashboard/#{@user1.id}"
 
     click_button "Find Top Rated Movies"
 
-    expect(current_path).to eq("/users/#{@user1.id}/movies")
+    expect(current_path).to eq("/dashboard/#{@user1.id}/movies")
 
     expect(page).to have_content("Top Rated Movies")
     
@@ -24,7 +24,7 @@ RSpec.describe 'Movies Index Page' do
 
     click_link(movie_1.title)
 
-    expect(current_path).to eq("/users/#{@user1.id}/movies/#{movie_1.id}")
+    expect(current_path).to eq("/dashboard/#{@user1.id}/movies/#{movie_1.id}")
 
     expect(page).to have_content(movie_1.title)
     expect(page).to have_content(movie_1.description)

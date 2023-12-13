@@ -7,7 +7,7 @@ class ViewingPartiesController < ApplicationController
   def create 
     user = User.find(params[:user_id])
     user.viewing_parties.create(viewing_party_params)
-    redirect_to "/users/#{params[:user_id]}"
+    redirect_to "/dashboard/#{params[:user_id]}"
   end 
 
   private 

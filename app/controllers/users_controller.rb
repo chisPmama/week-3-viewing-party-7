@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       redirect_to register_path
     elsif new_user.save
       flash[:success] = "Password matches. Welcome, #{new_user.name}!"
-      redirect_to user_path(new_user)
+      redirect_to dashboard_path(new_user)
     else
       flash[:error] = new_user.errors.full_messages.to_sentence
       redirect_to register_path
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
-      redirect_to user_path(user)
+      redirect_to dashboard_path(user)
     else
       flash[:error] = "Error! Incorrect credentials."
       redirect_to login_path
