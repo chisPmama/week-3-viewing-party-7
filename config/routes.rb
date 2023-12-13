@@ -10,8 +10,10 @@ Rails.application.routes.draw do
   get '/dashboard/movies', to: 'movies#index', as: 'movies'
   get '/dashboard/movies/:id', to: 'movies#show', as: 'movie'
 
+  get '/movies/:id', to: 'movies#visit_show', as: 'movie_visit'
+
   get '/dashboard', to: 'users#show', as: :dashboard
 
-  get '/dashboard/movies/:movie_id/viewing_parties/new', to: 'viewing_parties#new'
+  get '/dashboard/movies/:movie_id/viewing_parties/new', to: 'viewing_parties#new', as: 'viewing_party'
   post '/dashboard/movies/:movie_id/viewing_parties', to: 'viewing_parties#create'
 end

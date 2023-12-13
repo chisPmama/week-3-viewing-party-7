@@ -9,15 +9,15 @@ RSpec.describe 'Movies Index Page' do
       Movie.create(title: "Movie #{i} Title", rating: rand(1..10), description: "This is a description about Movie #{i}")
       i+=1
     end 
+  end 
 
+  it 'shows all movies' do 
     visit login_path
 
     fill_in :email, with: @user1.email
     fill_in :password, with: @user1.password
     click_button "Log In"
-  end 
 
-  it 'shows all movies' do 
     visit dashboard_path
 
     click_button "Find Top Rated Movies"
@@ -42,6 +42,10 @@ RSpec.describe 'Movies Index Page' do
   #   I'm redirected to the movies show page, and a message appears to let me know I must be logged in or registered to create a movie party.
 
   it "as a visitor (who is not logged in), when going to a movie show page to create a viewing party, the page directs to the show page and requires a login" do
-    visit movie
+    movie = Movie.last
+    visit movie_visit_path(movie)
+    click_button "Create a Viewing Party"
+    expect(current_path).to eq(movie_visit_path(movie))
+    expect(page).to have_content("Error! You must be logged in or registered to access the dashboard.")
   end
 end
