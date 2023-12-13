@@ -7,11 +7,11 @@ Rails.application.routes.draw do
 
   get '/register', to: 'users#new'
   post '/users', to: 'users#create'
-  get '/dashboard/:id/movies', to: 'movies#index', as: 'movies'
-  get '/dashboard/:user_id/movies/:id', to: 'movies#show', as: 'movie'
+  get '/dashboard/movies', to: 'movies#index', as: 'movies'
+  get '/dashboard/movies/:id', to: 'movies#show', as: 'movie'
 
   get '/dashboard', to: 'users#show', as: :dashboard
 
-  get '/dashboard/:user_id/movies/:movie_id/viewing_parties/new', to: 'viewing_parties#new'
-  post '/dashboard/:user_id/movies/:movie_id/viewing_parties', to: 'viewing_parties#create'
+  get '/dashboard/movies/:movie_id/viewing_parties/new', to: 'viewing_parties#new'
+  post '/dashboard/movies/:movie_id/viewing_parties', to: 'viewing_parties#create'
 end

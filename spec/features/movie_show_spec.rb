@@ -22,18 +22,26 @@ RSpec.describe 'Movies Index Page' do
 
     click_button "Find Top Rated Movies"
 
-    expect(current_path).to eq("/dashboard/#{@user1.id}/movies")
-
+    expect(current_path).to eq("/dashboard/movies")
     expect(page).to have_content("Top Rated Movies")
     
     movie_1 = Movie.first
 
     click_link(movie_1.title)
 
-    expect(current_path).to eq("/dashboard/#{@user1.id}/movies/#{movie_1.id}")
+    expect(current_path).to eq("/dashboard/movies/#{movie_1.id}")
 
     expect(page).to have_content(movie_1.title)
     expect(page).to have_content(movie_1.description)
     expect(page).to have_content(movie_1.rating)
   end 
+
+  #   As a visitor
+  #   If I go to a movies show page 
+  #   And click the button to create a viewing party
+  #   I'm redirected to the movies show page, and a message appears to let me know I must be logged in or registered to create a movie party.
+
+  it "as a visitor (who is not logged in), when going to a movie show page to create a viewing party, the page directs to the show page and requires a login" do
+    visit movie
+  end
 end

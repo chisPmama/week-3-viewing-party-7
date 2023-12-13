@@ -57,7 +57,9 @@ class UsersController < ApplicationController
   end 
 
   def require_login
-    redirect_to root_path unless current_user
-    flash[:error] = "Error! You must be logged in or registered to access the dashboard." unless current_user
+    unless current_user
+      redirect_to root_path 
+      flash[:error] = "Error! You must be logged in or registered to access the dashboard."
+    end
   end
 end 

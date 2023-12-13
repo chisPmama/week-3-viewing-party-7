@@ -41,7 +41,6 @@ RSpec.describe "User Log In Page" do
 
       expect(current_path).to eq(login_path)
       expect(page).to have_content("Error! Incorrect credentials.")
-
     end
   end
 end
