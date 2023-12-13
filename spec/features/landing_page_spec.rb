@@ -94,5 +94,11 @@ RSpec.describe 'Landing Page' do
       expect(page).to have_content(@user2.email)
       expect(page).to have_content(@user3.email)
     end
+
+    it "when trying to visit the dashboard, user remains on the landing page with a message saying user must be logged in" do
+      visit dashboard_path(@user3)
+      expect(current_path).to eq(root_path)
+      expect(page).to have_content("Error! You must be logged in or registered to access the dashboard.")
+    end
   end
 end
