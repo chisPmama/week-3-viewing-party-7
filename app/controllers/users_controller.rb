@@ -36,7 +36,6 @@ class UsersController < ApplicationController
       redirect_to user_path(user)
     else
       flash[:error] = "Error! Incorrect credentials."
-      # render :login_form
       redirect_to login_path
     end
   end
