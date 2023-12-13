@@ -9,6 +9,12 @@ RSpec.describe 'Movies Index Page' do
       Movie.create(title: "Movie #{i} Title", rating: rand(1..10), description: "This is a description about Movie #{i}")
       i+=1
     end 
+
+    visit login_path
+
+    fill_in :email, with: @user1.email
+    fill_in :password, with: @user1.password
+    click_button "Log In"
   end 
 
   it 'shows all movies' do 

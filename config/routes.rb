@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get '/dashboard/:user_id/movies/:id', to: 'movies#show', as: 'movie'
 
   get '/dashboard/:id', to: 'users#show', as: :dashboard
+  get '/dashboard', to: 'users#show'
 
   get '/dashboard/:user_id/movies/:movie_id/viewing_parties/new', to: 'viewing_parties#new'
   post '/dashboard/:user_id/movies/:movie_id/viewing_parties', to: 'viewing_parties#create'

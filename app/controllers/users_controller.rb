@@ -1,4 +1,6 @@
 class UsersController < ApplicationController 
+  before_action :require_login, only: :show
+
   def new 
     @user = User.new()
   end 
@@ -17,6 +19,7 @@ class UsersController < ApplicationController
       flash[:error] = "Error! Passwords do not match."
       redirect_to register_path
     elsif new_user.save
+      session[:user_id] = new_user.id
       flash[:success] = "Password matches. Welcome, #{new_user.name}!"
       redirect_to dashboard_path(new_user)
     else
@@ -51,4 +54,9 @@ class UsersController < ApplicationController
   def user_params 
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :logout)
   end 
+
+  def require_login
+    redirect_to root_path unless current_user
+    flash[:error] = "Error! You must be logged in or registered to access the dashboard."
+  end
 end 
