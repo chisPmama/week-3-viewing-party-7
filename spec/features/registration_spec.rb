@@ -25,7 +25,7 @@ RSpec.describe "User Registration" do
 
     # I'm taken to my dashboard page `/dashboard/:id`
     user = User.last
-    expect(current_path).to eq(dashboard_path(user.id))
+    expect(current_path).to eq(dashboard_path)
     expect(page).to have_content("Password matches. Welcome, #{name}!")
     expect(user).to_not have_attribute(:password)
     expect(user.password_digest).to_not eq(password)

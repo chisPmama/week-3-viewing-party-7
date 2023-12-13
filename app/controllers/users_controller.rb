@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   end 
 
   def show 
-    @user = User.find(params[:id])
+    @user = User.find(session[:user_id])
   end 
 
   def create 
@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     elsif new_user.save
       session[:user_id] = new_user.id
       flash[:success] = "Password matches. Welcome, #{new_user.name}!"
-      redirect_to dashboard_path(new_user)
+      redirect_to dashboard_path
     else
       flash[:error] = new_user.errors.full_messages.to_sentence
       redirect_to register_path
@@ -33,13 +33,14 @@ class UsersController < ApplicationController
 
   def login_user
     user = User.find_by(email: params[:email])
-    if user.authenticate(params[:password])
+
+    if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}!"
-      redirect_to dashboard_path(user)
+      redirect_to dashboard_path
     else
-      flash[:error] = "Error! Incorrect credentials."
       redirect_to login_path
+      flash[:error] = "Error! Incorrect credentials."
     end
   end
 
@@ -57,6 +58,6 @@ class UsersController < ApplicationController
 
   def require_login
     redirect_to root_path unless current_user
-    flash[:error] = "Error! You must be logged in or registered to access the dashboard."
+    flash[:error] = "Error! You must be logged in or registered to access the dashboard." unless current_user
   end
 end 
